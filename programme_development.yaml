@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Programme Development and Review API
+  version: 1.0.0
+  description: API for managing programmes in the Programme Development Unit
+servers:
+  - url: http://localhost:8080/programme
+paths:
+  /addProgramme:
+    post:
+      summary: Add a new programme
+      operationId: addProgramme
+      requestBody:
+        description: Programme object to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Programme'
+      responses:
+        '200':
+          description: Programme added successfully
+  /allProgrammes:
+    get:
+      summary: Retrieve all programmes
+      operationId: allProgrammes
+      responses:
+        '200':
+          description: A list of all programmes
+  /programme/{programmeCode}:
+    get:
+      summary: Retrieve a programme by code
+      operationId: getProgramme
+      parameters:
+        - name: programmeCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Programme details
+  /programme/updateProgramme/{programmeCode}:
+    put:
+      summary: Update a programme by code
+      operationId: updateProgramme
+      parameters:
+        - name: programmeCode
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Programme object with updated information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Programme'
+      responses:
+        '200':
+          description: Programme updated successfully
+  /programme/deleteProgramme/{programmeCode}:
+    delete:
+      summary: Delete a programme by code
+      operationId: deleteProgramme
+      parameters:
+        - name: programmeCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Programme deleted successfully
+components:
+  schemas:
+    Programme:
+      type: object
+      properties:
+        programmeCode:
+          type: string
+        title:
+          type: string
+        nqfLevel:
+          type: string
+        faculty:
+          type: string
+        department:
+          type: string
+        registrationDate:
+          type: string
+          format: date
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+    Course:
+      type: object
+      properties:
+        courseCode:
+          type: string
+        courseName:
+          type: string
+        nqfLevel:
+          type: string
