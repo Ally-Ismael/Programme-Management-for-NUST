@@ -42,48 +42,65 @@ public isolated client class Client {
     #
     # + payload - Programme object to be added
     # + return - Programme added successfully 
-    resource isolated function post addProgramme(Programme payload) returns http:Response|error {
+    resource isolated function post addProgramme(Programme payload) returns string|error {
         string resourcePath = string `/addProgramme`;
         http:Request request = new;
         json jsonBody = payload.toJson();
         request.setPayload(jsonBody, "application/json");
-        http:Response response = check self.clientEp->post(resourcePath, request);
+        string response = check self.clientEp->post(resourcePath, request);
         return response;
     }
     # Retrieve all programmes
     #
     # + return - A list of all programmes 
-    resource isolated function get allProgrammes() returns http:Response|error {
+    resource isolated function get allProgrammes() returns json|error {
         string resourcePath = string `/allProgrammes`;
-        http:Response response = check self.clientEp->get(resourcePath);
+        json response = check self.clientEp->get(resourcePath);
         return response;
     }
     # Retrieve a programme by code
     #
     # + return - Programme details 
-    resource isolated function get programme/[string programmeCode]() returns http:Response|error {
+    resource isolated function get programme/[string programmeCode]() returns Programme|error {
         string resourcePath = string `/programme/${getEncodedUri(programmeCode)}`;
-        http:Response response = check self.clientEp->get(resourcePath);
+        Programme response = check self.clientEp->get(resourcePath);
         return response;
     }
     # Update a programme by code
     #
     # + payload - Programme object with updated information
     # + return - Programme updated successfully 
-    resource isolated function put programme/updateProgramme/[string programmeCode](Programme payload) returns http:Response|error {
+    resource isolated function put programme/updateProgramme/[string programmeCode](Programme payload) returns string|error {
         string resourcePath = string `/programme/updateProgramme/${getEncodedUri(programmeCode)}`;
         http:Request request = new;
         json jsonBody = payload.toJson();
         request.setPayload(jsonBody, "application/json");
-        http:Response response = check self.clientEp->put(resourcePath, request);
+        string response = check self.clientEp->put(resourcePath, request);
         return response;
     }
     # Delete a programme by code
     #
     # + return - Programme deleted successfully 
-    resource isolated function delete programme/deleteProgramme/[string programmeCode]() returns http:Response|error {
+    resource isolated function delete programme/deleteProgramme/[string programmeCode]() returns string|error {
         string resourcePath = string `/programme/deleteProgramme/${getEncodedUri(programmeCode)}`;
-        http:Response response = check self.clientEp-> delete(resourcePath);
+        string response = check self.clientEp-> delete(resourcePath);
+        return response;
+    }
+    # Retrieve all programmes due for review
+    #
+    # + return - A list of programmes due for review 
+    resource isolated function get programmesDueForReview() returns json|error {
+        string resourcePath = string `/programmesDueForReview`;
+        json response = check self.clientEp->get(resourcePath);
+        return response;
+    }
+    # Retrieve all programmes by faculty
+    #
+    # + return - A list of programmes in the specified faculty 
+    resource isolated function get programmesByFaculty/[string faculty]() returns json|error {
+        string resourcePath = string `/programmesByFaculty/${getEncodedUri(faculty)}`;
+        json response = check self.clientEp->get(resourcePath);
         return response;
     }
 }
+
