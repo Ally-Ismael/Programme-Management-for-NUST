@@ -59,6 +59,28 @@ public type ProxyConfig record {|
     string password = "";
 |};
 
+public type ProgrammesdueforreviewResponse record {|
+    Programme...;
+|};
+
+public type ProgrammesbyfacultyFacultyResponse record {|
+    Programme...;
+|};
+
+public type AllprogrammesResponse record {|
+    Programme...;
+|};
+
+public type OkString record {|
+    *http:Ok;
+    string body;
+|};
+
+public type NotFoundString record {|
+    *http:NotFound;
+    string body;
+|};
+
 public type Course record {
     string courseCode?;
     string courseName?;
@@ -74,3 +96,4 @@ public type Programme record {
     string registrationDate?;
     Course[] courses?;
 };
+
