@@ -20,6 +20,10 @@ paths:
       responses:
         '200':
           description: Programme added successfully
+          content:
+            text/plain:
+              schema:
+                type: string
   /allProgrammes:
     get:
       summary: Retrieve all programmes
@@ -27,6 +31,12 @@ paths:
       responses:
         '200':
           description: A list of all programmes
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Programme'
   /programme/{programmeCode}:
     get:
       summary: Retrieve a programme by code
@@ -40,6 +50,16 @@ paths:
       responses:
         '200':
           description: Programme details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Programme'
+        '404':
+          description: Programme not found
+          content:
+            text/plain:
+              schema:
+                type: string
   /programme/updateProgramme/{programmeCode}:
     put:
       summary: Update a programme by code
@@ -60,6 +80,16 @@ paths:
       responses:
         '200':
           description: Programme updated successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Programme not found
+          content:
+            text/plain:
+              schema:
+                type: string
   /programme/deleteProgramme/{programmeCode}:
     delete:
       summary: Delete a programme by code
@@ -73,6 +103,48 @@ paths:
       responses:
         '200':
           description: Programme deleted successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Programme not found
+          content:
+            text/plain:
+              schema:
+                type: string
+  /programmesDueForReview:
+    get:
+      summary: Retrieve all programmes due for review
+      operationId: getProgrammesDueForReview
+      responses:
+        '200':
+          description: A list of programmes due for review
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Programme'
+  /programmesByFaculty/{faculty}:
+    get:
+      summary: Retrieve all programmes by faculty
+      operationId: getProgrammesByFaculty
+      parameters:
+        - name: faculty
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of programmes in the specified faculty
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Programme'
 components:
   schemas:
     Programme:
