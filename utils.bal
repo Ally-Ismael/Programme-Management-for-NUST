@@ -15,3 +15,4 @@ isolated function getEncodedUri(anydata value) returns string {
         return value.toString();
     }
 }
+
