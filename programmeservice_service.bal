@@ -14,7 +14,7 @@ service /programme on ep0 {
         return "Programme added successfully";
     }
     
-    // Retrieve all programmes
+  // Retrieve all programmes
     resource function get allProgrammes() returns json|error {
         return programmes.toJson();
     }
