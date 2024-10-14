@@ -1,0 +1,12 @@
+CREATE DATABASE logisticsSystem
+CREATE TABLE Shipments (
+    ShipmentID INT PRIMARY KEY AUTO_INCREMENT,
+    ShipmentType VARCHAR(50), -- e.g., 'standard', 'express', 'international'
+    PickupLocation VARCHAR(255),
+    DeliveryLocation VARCHAR(255),
+    PreferredTimeSlot VARCHAR(100),
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    ContactNumber VARCHAR(15),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
